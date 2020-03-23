@@ -7,7 +7,7 @@ import Geolocation from '@react-native-community/geolocation';
 import {Region} from 'react-native-maps';
 import Config from 'react-native-config';
 import MapStackScreen from './MapStackScreen/MapStackScreen';
-import PopularScreen from './PopularScreen/PopularScreen';
+import PopularStackScreen from './PopularStackScreen/PopularStackScreen';
 import {AppContext} from './AppContext';
 
 const Tab = createBottomTabNavigator();
@@ -55,7 +55,7 @@ const App = () => {
       setRegion(newRegion);
       getRestaurants(newRegion, country);
     });
-  }, []);
+  }, [country]);
 
   useLayoutEffect(() => {
     getRestaurants(region, country);
@@ -94,7 +94,7 @@ const App = () => {
             inactiveTintColor: 'gray',
           }}>
           <Tab.Screen name="Map" component={MapStackScreen} />
-          <Tab.Screen name="Popular" component={PopularScreen} />
+          <Tab.Screen name="Popular" component={PopularStackScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     </AppContext.Provider>

@@ -19,8 +19,8 @@ const Markers = () => {
       {restaurants.map(restaurant => {
         let description: string = `Googleレビュー: ${restaurant.rating}\n`;
         if (
-          restaurant.opening_hours &&
-          restaurant.opening_hours.opennow !== 'undefined'
+          'opening_hours' in restaurant &&
+          'open_now' in restaurant.opening_hours
         ) {
           description += restaurant.opening_hours.open_now
             ? '営業中'

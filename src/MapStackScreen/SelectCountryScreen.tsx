@@ -26,7 +26,7 @@ const SelectCountryScreen = ({navigation}) => {
             onPress={() => {
               console.log(c);
               setCountry(c);
-              navigation.navigate('MapHome');
+              navigation.goBack();
             }}
             button
             selected={country === c}>
