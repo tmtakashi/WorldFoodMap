@@ -1,17 +1,65 @@
 import React, {useContext} from 'react';
+import {TouchableOpacity, StyleSheet} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from '@react-navigation/stack';
 import MapScreen from './MapScreen';
+import SelectCountryScreen from './SelectCountryScreen';
 import {AppContext} from '../AppContext';
 
 const MapStack = createStackNavigator();
 
-const MapStackScreen = () => {
+const MapStackScreen = ({navigation}) => {
   const {country} = useContext(AppContext);
   return (
     <MapStack.Navigator>
-      <MapStack.Screen name={country} component={MapScreen} />
+      <MapStack.Screen
+        name="MapHome"
+        component={MapScreen}
+        options={{
+          title: country,
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Select Country')}>
+              <FontAwesome
+                name="bars"
+                size={24}
+                style={styles.chooseCountryBtn}
+              />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <MapStack.Screen
+        name="Select Country"
+        component={SelectCountryScreen}
+        options={{
+          title: '国を選択',
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('MapHome');
+              }}>
+              <Ionicons
+                name="ios-arrow-back"
+                size={24}
+                style={styles.backToMapBtn}
+              />
+            </TouchableOpacity>
+          ),
+        }}
+      />
     </MapStack.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  chooseCountryBtn: {
+    paddingRight: 20,
+  },
+  backToMapBtn: {
+    paddingLeft: 20,
+  },
+});
 
 export default MapStackScreen;

@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import React, {useState, useEffect, useLayoutEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Geolocation from '@react-native-community/geolocation';
 import {Region} from 'react-native-maps';
@@ -19,7 +20,7 @@ const App = () => {
     longitudeDelta: 0.02,
   });
   const [restaurants, setRestaurants] = useState<{}[]>([]);
-  const [country, setCountry] = useState<String>('タイ');
+  const [country, setCountry] = useState<string>('タイ');
   const getRestaurants = async (
     centerPosition: Region,
     targetCountry: String,
@@ -71,9 +72,25 @@ const App = () => {
         setCountry,
       }}>
       <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="地図" component={MapStackScreen} />
-          <Tab.Screen name="人気のお店" component={PopularScreen} />
+        <Tab.Navigator
+          screenOptions={({route}) => ({
+            tabBarIcon: ({focused, color, size}) => {
+              let iconName;
+
+              if (route.name === 'Map') {
+                iconName = focused ? 'map' : 'map-o';
+              } else if (route.name === 'Popular') {
+                iconName = focused ? 'star' : 'star-o';
+              }
+              return <FontAwesome name={iconName} size={size} color={color} />;
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: 'skyblue',
+            inactiveTintColor: 'gray',
+          }}>
+          <Tab.Screen name="Map" component={MapStackScreen} />
+          <Tab.Screen name="Popular" component={PopularScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     </AppContext.Provider>

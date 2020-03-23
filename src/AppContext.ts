@@ -6,7 +6,7 @@ type IState = {
   setRegion: (region: Region) => void;
   restaurants: {}[];
   setRestaurants: (restaurants: {}[]) => void;
-  country: String;
+  country: string;
   setCountry: (country: string) => void;
 };
 

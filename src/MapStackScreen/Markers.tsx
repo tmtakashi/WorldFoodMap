@@ -1,7 +1,12 @@
 import React, {useContext, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
+import Emoji from 'react-native-emoji';
 import {Marker} from 'react-native-maps';
 import {AppContext} from '../AppContext';
+
+const COUNTRY2FLAG: {[country: string]: string} = {
+  タイ: 'flag-th',
+};
 
 const Markers = () => {
   const {restaurants, country} = useContext(AppContext);
@@ -16,13 +21,24 @@ const Markers = () => {
           }}
           title={restaurant.name}
           description={`Googleレビュー: ${restaurant.rating}`}>
-          <View style={{borderWidth: 2, padding: 10}}>
-            <Text>{country}</Text>
+          <View style={styles.marker}>
+            <Text>
+              <Emoji name={COUNTRY2FLAG[country]} style={styles.emoji} />
+            </Text>
           </View>
         </Marker>
       ))}
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  marker: {
+    padding: 10,
+  },
+  emoji: {
+    fontSize: 30,
+  },
+});
 
 export default Markers;
