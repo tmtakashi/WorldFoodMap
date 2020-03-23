@@ -6,7 +6,7 @@ import Markers from './Markers';
 import {AppContext} from '../AppContext';
 
 const MapScreen = () => {
-  const {region, setRegion, country} = useContext(AppContext);
+  const {region, setRegion} = useContext(AppContext);
   return (
     <View style={styles.container}>
       <MapView

@@ -6,28 +6,43 @@ import {AppContext} from '../AppContext';
 
 const COUNTRY2FLAG: {[country: string]: string} = {
   タイ: 'flag-th',
+  インド: 'flag-in',
+  イタリア: 'it',
+  フランス: 'fr',
+  ドイツ: 'de',
 };
 
 const Markers = () => {
   const {restaurants, country} = useContext(AppContext);
   return (
     <>
-      {restaurants.map(restaurant => (
-        <Marker
-          key={restaurant.id}
-          coordinate={{
-            latitude: restaurant.geometry.location.lat,
-            longitude: restaurant.geometry.location.lng,
-          }}
-          title={restaurant.name}
-          description={`Googleレビュー: ${restaurant.rating}`}>
-          <View style={styles.marker}>
-            <Text>
-              <Emoji name={COUNTRY2FLAG[country]} style={styles.emoji} />
-            </Text>
-          </View>
-        </Marker>
-      ))}
+      {restaurants.map(restaurant => {
+        let description: string = `Googleレビュー: ${restaurant.rating}\n`;
+        if (
+          restaurant.opening_hours &&
+          restaurant.opening_hours.opennow !== 'undefined'
+        ) {
+          description += restaurant.opening_hours.open_now
+            ? '営業中'
+            : '営業時間外';
+        }
+        return (
+          <Marker
+            key={restaurant.id}
+            coordinate={{
+              latitude: restaurant.geometry.location.lat,
+              longitude: restaurant.geometry.location.lng,
+            }}
+            title={restaurant.name}
+            description={description}>
+            <View style={styles.marker}>
+              <Text>
+                <Emoji name={COUNTRY2FLAG[country]} style={styles.emoji} />
+              </Text>
+            </View>
+          </Marker>
+        );
+      })}
     </>
   );
 };

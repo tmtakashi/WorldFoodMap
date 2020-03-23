@@ -15,22 +15,28 @@ import {AppContext} from '../AppContext';
 
 const countryList = ['タイ', 'インド', 'イタリア', 'フランス', 'ドイツ'];
 
-const SelectCountryScreen = () => {
-  const {country} = useContext(AppContext);
+const SelectCountryScreen = ({navigation}) => {
+  const {country, setCountry} = useContext(AppContext);
   return (
     <Content>
       <List>
         {countryList.map(c => (
-          <TouchableOpacity key={c}>
-            <ListItem selected={country === c}>
-              <Left>
-                <Text>{c}</Text>
-              </Left>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
-            </ListItem>
-          </TouchableOpacity>
+          <ListItem
+            key={c}
+            onPress={() => {
+              console.log(c);
+              setCountry(c);
+              navigation.navigate('MapHome');
+            }}
+            button
+            selected={country === c}>
+            <Left>
+              <Text>{c}</Text>
+            </Left>
+            <Right>
+              <Icon name="arrow-forward" />
+            </Right>
+          </ListItem>
         ))}
       </List>
     </Content>

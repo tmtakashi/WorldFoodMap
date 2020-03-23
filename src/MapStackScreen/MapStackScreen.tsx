@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import {TouchableOpacity, StyleSheet, Text} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -10,7 +10,7 @@ import {AppContext} from '../AppContext';
 const MapStack = createStackNavigator();
 
 const MapStackScreen = ({navigation}) => {
-  const {country} = useContext(AppContext);
+  const {country, region} = useContext(AppContext);
   return (
     <MapStack.Navigator>
       <MapStack.Screen
@@ -18,6 +18,15 @@ const MapStackScreen = ({navigation}) => {
         component={MapScreen}
         options={{
           title: country,
+          //   headerLeft: () => {
+          //     return (
+          //       <Text>
+          //         {region.latitude.toPrecision(4) +
+          //           '\n' +
+          //           region.longitude.toPrecision(4)}
+          //       </Text>
+          //     );
+          //   },
           headerRight: () => (
             <TouchableOpacity
               onPress={() => navigation.navigate('Select Country')}>

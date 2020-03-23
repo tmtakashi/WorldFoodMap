@@ -61,6 +61,10 @@ const App = () => {
     getRestaurants(region, country);
   }, [country, region]);
 
+  useEffect(() => {
+    setRestaurants([]);
+  }, [country]);
+
   return (
     <AppContext.Provider
       value={{
